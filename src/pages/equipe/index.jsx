@@ -10,7 +10,7 @@ export default function equipes(){
         <HEADER></HEADER>        
         
         <div className="relative isolate px-6 pt-14 lg:px-8">
-        <h1>Cadastro de equipe</h1>
+        <h1>Area de cadastro de Funcionarios</h1>
             </div>
         
             </div>
