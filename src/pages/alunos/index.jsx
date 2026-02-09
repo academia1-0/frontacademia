@@ -3,12 +3,62 @@ import StyleLocal from './style.module.css'
 import HEADER from '../../components/header/index'
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import {useState} from 'react'
-
+import axios from 'axios' //UTILIZAR QUANDO O PROJETO FOR USAR TOKEN, AUTENTUCAÇÃO JWT, REUTILIZAR baseURL, Headers.
 
 export default function Alunos(){
 
+  const [formData, setFormData] = useState({
+    nome: '',
+    email: '',
+    telefone: '',
+    data_nascimento: '',
+    endereco: '',
+    sexo: 'feminino',
+    pagamento: 1,
+    data_pagamento: '31/03/2026'
+});
+
   const [ativo, setAtivo] = useState(false)
   const [valor, setValor] = useState('')
+
+  const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    setFormData({
+        ...formData,
+        [e.target.name]: e.target.value
+    });
+};
+
+  //-------------usando axios
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Previne o comportamento padrão do formulário
+
+    try {
+        // Fazendo a requisição com axios
+        const response = await axios.post('http://127.0.0.1:8000/api/clientes', formData);
+
+        // Verifica se a requisição foi bem-sucedida
+        if (response.status === 200 || response.status === 201) {
+            setMessage(response.data.message); // Configura a mensagem de sucesso
+            setErrors({}); // Limpa os erros
+            setOpen(true); // Configura o estado de sucesso/abertura
+        }
+    } catch (error) {
+        // Trata os erros
+        if (error.response && error.response.status === 400) {
+            // Erros de validação retornados pelo backend
+            setErrors('apareceu isso: ',error.response.data.errors);
+        } 
+          else {
+            // Outros erros, como problemas de rede
+            setMessage('Something went wrong. Please try again later.');
+        }
+    }
+};
+
+
 
     return(
         <div className="bg-gray-900">
@@ -33,7 +83,7 @@ export default function Alunos(){
         <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">Dados do Aluno</h2>
         <p className="mt-2 text-lg/8 text-gray-400">Preencha os dados corretamente</p>
       </div>
-      <form action="#" method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
+      <form  onSubmit={handleSubmit} className="mx-auto mt-16 max-w-xl sm:mt-20" >
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <div>
             <label htmlFor="first-name" className="block text-sm/6 font-semibold text-white">
@@ -42,10 +92,12 @@ export default function Alunos(){
             <div className="mt-2.5">
               <input
                 id="first-name"
-                name="first-name"
                 type="text"
                 autoComplete="given-name"
                 className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                name="nome"
+                value={formData.nome}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -68,10 +120,12 @@ export default function Alunos(){
             <div className="mt-2.5">
               <input
                 id="company"
-                name="company"
                 type="text"
                 autoComplete="organization"
                 className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                name="endereco"
+                value={formData.endereco}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -82,10 +136,12 @@ export default function Alunos(){
             <div className="mt-2.5">
               <input
                 id="email"
-                name="email"
                 type="email"
                 autoComplete="email"
                 className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -114,10 +170,12 @@ export default function Alunos(){
                 </div> */}
                 <input
                   id="phone-number"
-                  name="phone-number"
                   type="text"
                   placeholder="(xx)xxxxx-xxxx"
                   className="block min-w-0 grow bg-transparent py-1.5 pr-3 pl-1 text-base text-white placeholder:text-gray-500 focus:outline-none sm:text-sm/6"
+                  name="telefone"
+                  value={formData.telefone}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -145,10 +203,12 @@ export default function Alunos(){
             <div className="mt-2.5">
               <input
                 id="data_nascimento"
-                name="data_nascimento"
                 type="data_nascimento"
                 autoComplete="data_nascimento"
                 className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                name="data_nascimento"
+                value={formData.data_nascimento}
+                onChange={handleChange}
               />
             </div>
           </div>
