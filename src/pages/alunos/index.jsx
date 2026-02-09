@@ -13,7 +13,7 @@ export default function Alunos(){
     telefone: '',
     data_nascimento: '',
     endereco: '',
-    sexo: 'feminino',
+    sexo: 'Outros',
     pagamento: 1,
     data_pagamento: '31/03/2026'
 });
@@ -30,6 +30,8 @@ export default function Alunos(){
         [e.target.name]: e.target.value
     });
 };
+
+
 
   //-------------usando axios
   const handleSubmit = async (e) => {
@@ -106,10 +108,16 @@ export default function Alunos(){
             Sexo
           </label>
           <div className="mt-1.5">
-          <select className="block w-full rounded-md bg-white/5 px-3.5 py-2.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500">
-            <option>Outro</option>
-            <option>Feminino</option>
-            <option>Masculino</option>
+          <select 
+          className={`${StyleLocal.selecaoSexo} "block w-full rounded-md bg-white/5 px-3.5 py-2.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"`}
+          name="sexo"
+         
+          value={formData.sexo}
+          onChange={handleChange}
+          >
+            <option value="Outros" className={StyleLocal.selecaoOpSexo} >Outro</option>
+            <option value="Feminino" className={StyleLocal.selecaoOpSexo}>Feminino</option>
+            <option value="Masculino" className={StyleLocal.selecaoOpSexo}>Masculino</option>
           </select>
           </div>
         </div>
