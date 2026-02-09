@@ -1,8 +1,15 @@
 import Style from '../../app/globals.css'
+import StyleLocal from './style.module.css'
 import HEADER from '../../components/header/index'
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
+import {useState} from 'react'
+
 
 export default function Alunos(){
+
+  const [ativo, setAtivo] = useState(false)
+  const [valor, setValor] = useState('')
+
     return(
         <div className="bg-gray-900">
             <HEADER/>
@@ -42,20 +49,18 @@ export default function Alunos(){
               />
             </div>
           </div>
-          <div>
-            <label htmlFor="last-name" className="block text-sm/6 font-semibold text-white">
-              Sexo
-            </label>
-            <div className="mt-2.5">
-              <input
-                id="last-name"
-                name="last-name"
-                type="text"
-                autoComplete="family-name"
-                className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
-              />
-            </div>
+          <div className="flex flex-col gap-1 ">
+          <label className="block text-sm/6 font-semibold text-white">
+            Sexo
+          </label>
+          <div className="mt-1.5">
+          <select className="block w-full rounded-md bg-white/5 px-3.5 py-2.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500">
+            <option>Outro</option>
+            <option>Feminino</option>
+            <option>Masculino</option>
+          </select>
           </div>
+        </div>
           <div className="sm:col-span-2">
             <label htmlFor="company" className="block text-sm/6 font-semibold text-white">
               Endereço
@@ -90,7 +95,7 @@ export default function Alunos(){
             </label>
             <div className="mt-2.5">
               <div className="flex rounded-md bg-white/5 outline-1 -outline-offset-1 outline-white/10 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-500">
-                <div className="grid shrink-0 grid-cols-1 focus-within:relative">
+                {/* <div className="grid shrink-0 grid-cols-1 focus-within:relative">
                   <select
                     id="country"
                     name="country"
@@ -106,16 +111,18 @@ export default function Alunos(){
                     aria-hidden="true"
                     className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-400 sm:size-4"
                   />
-                </div>
+                </div> */}
                 <input
                   id="phone-number"
                   name="phone-number"
                   type="text"
-                  placeholder="123-456-7890"
+                  placeholder="(xx)xxxxx-xxxx"
                   className="block min-w-0 grow bg-transparent py-1.5 pr-3 pl-1 text-base text-white placeholder:text-gray-500 focus:outline-none sm:text-sm/6"
                 />
               </div>
             </div>
+            
+
           </div>
           {/* <div className="sm:col-span-2">
             <label htmlFor="message" className="block text-sm/6 font-semibold text-white">
@@ -146,27 +153,45 @@ export default function Alunos(){
             </div>
           </div>
 
-          {/* <div className="flex gap-x-4 sm:col-span-2">
-            <div className="flex h-6 items-center">
-              <div className="group relative inline-flex w-8 shrink-0 rounded-full bg-white/5 p-px inset-ring inset-ring-white/10 outline-offset-2 outline-indigo-500 transition-colors duration-200 ease-in-out has-checked:bg-indigo-500 has-focus-visible:outline-2">
-                <span className="size-4 rounded-full bg-white shadow-xs ring-1 ring-gray-900/5 transition-transform duration-200 ease-in-out group-has-checked:translate-x-3.5" />
+          {/* <label className="flex items-center cursor-pointer gap-3">
+              <span className="text-sm">Pagamento</span>
+
+              <div className={`${StyleLocal.btnPagamento} relative`} >
                 <input
-                  id="agree-to-policies"
-                  name="agree-to-policies"
                   type="checkbox"
-                  aria-label="Agree to policies"
-                  className="absolute inset-0 size-full appearance-none focus:outline-hidden"
+                  className="sr-only"
+                  checked={ativo}
+                  onChange={() => setAtivo(!ativo)}
+                />
+
+                <div className={`block w-12 h-6 rounded-full transition 
+                  ${ativo ? 'bg-green-500' : 'bg-gray-300'}`}
+                />
+
+                <div className={`absolute left-1 top-1 w-4 h-4 bg-black rounded-full transition
+                  ${ativo ? 'translate-x-6' : ''}`}
                 />
               </div>
-            </div>
-            <label htmlFor="agree-to-policies" className="text-sm/6 text-gray-400">
-              By selecting this, you agree to our{' '}
-              <a href="#" className="font-semibold whitespace-nowrap text-indigo-400">
-                privacy policy
-              </a>
-              .
+
+      
             </label>
+
+            <div className="sm:col-span-2">
+            <label htmlFor="data_pagamento" className="block text-sm/6 font-semibold text-white">
+              Data de pagamento
+            </label>
+            <div className="mt-2.5">
+              <input
+                id="data_pagamento"
+                name="data_pagamento"
+                type="data_pagamento"
+                autoComplete="data_pagamento"
+                className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+              />
+            </div>
           </div> */}
+
+         
         </div>
         <div className="mt-10">
           <button
