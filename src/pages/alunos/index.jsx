@@ -55,14 +55,24 @@ export default function Alunos(){
         }
     } catch (error) {
         // Trata os erros
-        if (error.response && error.response.status === 400) {
-            // Erros de validação retornados pelo backend
-            setErrors('apareceu isso: ',error.response.data.errors);
-        } 
-          else {
-            // Outros erros, como problemas de rede
-            setMessage('Something went wrong. Please try again later.');
-        }
+
+        if (error.response) {
+          // Loga tudo que veio do backend
+          console.error('Status:', error.response.status);
+          console.error('Data:', error.response.data);
+  
+          // Caso específico de validação Laravel (422)
+          if (error.response.status === 422) {
+              setErrors(error.response.data.errors); // <-- correto
+          } else {
+              setMessage(error.response.data.message || 'Erro inesperado.');
+          }
+      } else {
+          // Erro de rede ou Axios
+          console.error('Erro Axios:', error);
+          setMessage('Erro de conexão com o servidor.');
+      }
+
     }
 };
 
@@ -121,7 +131,7 @@ export default function Alunos(){
           value={formData.sexo}
           onChange={handleChange}
           >
-            <option value="Outros" className={StyleLocal.selecaoOpSexo} >Outro</option>
+            <option value="Outros" className={StyleLocal.selecaoOpSexo} >Outros</option>
             <option value="Feminino" className={StyleLocal.selecaoOpSexo}>Feminino</option>
             <option value="Masculino" className={StyleLocal.selecaoOpSexo}>Masculino</option>
           </select>
