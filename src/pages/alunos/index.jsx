@@ -4,6 +4,7 @@ import HEADER from '../../components/header/index'
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import {useState} from 'react'
 import axios from 'axios' //UTILIZAR QUANDO O PROJETO FOR USAR TOKEN, AUTENTUCAÇÃO JWT, REUTILIZAR baseURL, Headers.
+import ModalSucesso from '../../components/modal/index'
 
 export default function Alunos(){
 
@@ -23,6 +24,7 @@ export default function Alunos(){
 
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState({});
+  const [modalSucess, setModalSucess] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -45,7 +47,7 @@ export default function Alunos(){
         if (response.status === 200 || response.status === 201) {
             setMessage(response.data.message); // Configura a mensagem de sucesso
             setErrors({}); // Limpa os erros
-            setOpen(true); // Configura o estado de sucesso/abertura
+            setModalSucess(true) // Configura o estado de sucesso para aparecer o modal
         }
     } catch (error) {
         // Trata os erros
@@ -272,7 +274,9 @@ export default function Alunos(){
       </form>
     </div>
 
-
+    {modalSucess == true &&
+        <ModalSucesso/>
+        }
             </div>
             
         </div>
