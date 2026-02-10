@@ -1,10 +1,13 @@
+'use client'
+
 import Style from '../../app/globals.css'
 import StyleLocal from './style.module.css'
 import HEADER from '../../components/header/index'
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import {useState} from 'react'
 import axios from 'axios' //UTILIZAR QUANDO O PROJETO FOR USAR TOKEN, AUTENTUCAÇÃO JWT, REUTILIZAR baseURL, Headers.
-import ModalSucesso from '../../components/modal/index'
+import ModalSucesso from '../../components/modal/modalsucesso/index'
+import ModalError from '../../components/modal/modalerror/index'
 
 export default function Alunos(){
 
@@ -25,6 +28,7 @@ export default function Alunos(){
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState({});
   const [modalSucess, setModalSucess] = useState(false);
+  const [modalError] = useState(true);
 
   const handleChange = (e) => {
     setFormData({
@@ -276,6 +280,9 @@ export default function Alunos(){
 
     {modalSucess == true &&
         <ModalSucesso/>
+        }
+        {modalError == true &&
+        <ModalError/>
         }
             </div>
             
