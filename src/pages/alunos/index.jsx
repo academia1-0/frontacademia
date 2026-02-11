@@ -4,7 +4,7 @@ import Style from '../../app/globals.css'
 import StyleLocal from './style.module.css'
 import HEADER from '../../components/header/index'
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import axios from 'axios' //UTILIZAR QUANDO O PROJETO FOR USAR TOKEN, AUTENTUCAÇÃO JWT, REUTILIZAR baseURL, Headers.
 import ModalSucesso from '../../components/modal/modalsucesso/index'
 import ModalError from '../../components/modal/modalerror/index'
@@ -30,15 +30,37 @@ export default function Alunos(){
   const [modalSucess, setModalSucess] = useState(false);
   const [modalError] = useState(true);
 
-  const handleChange = (e) => {
-    setFormData({
-        ...formData,
-        [e.target.name]: e.target.value
+//   const handleChange = (e) => {
+//     setFormData({
+//         ...formData,
+//         [e.target.name]: e.target.value
+//     });
+// };
+
+
+const handleChange = (e) => {
+  const { name, value } = e.target;
+
+  setFormData(prev => ({
+    ...prev,
+    [name]: value
+  }));
+
+  // Remove erro daquele campo específico
+  if (errors[name]) {
+    setErrors(prev => {
+      const newErrors = { ...prev };
+      delete newErrors[name];
+      return newErrors;
     });
+  }
 };
 
-
-
+// useEffect(() => {
+//   setErrors({
+//     nome: ["Teste de erro funcionando"]
+//   })
+// }, [])
   //-------------usando axios
   const handleSubmit = async (e) => {
     e.preventDefault(); // Previne o comportamento padrão do formulário
@@ -60,10 +82,14 @@ export default function Alunos(){
           // Loga tudo que veio do backend
           console.error('Status:', error.response.status);
           console.error('Data:', error.response.data);
+          // if (error.response?.status === 422) {
+          //   console.log("ERROS BACKEND:", error.response.data.errors);
+          //   setErrors(error.response.data.errors ?? {});
+          // }
   
           // Caso específico de validação Laravel (422)
           if (error.response.status === 422) {
-              setErrors(error.response.data.errors); // <-- correto
+              setErrors(error.response.data.erros ?? {}); // <-- correto
           } else {
               setMessage(error.response.data.message || 'Erro inesperado.');
           }
@@ -75,7 +101,6 @@ export default function Alunos(){
 
     }
 };
-
 
 
     return(
@@ -112,12 +137,25 @@ export default function Alunos(){
                 id="first-name"
                 type="text"
                 autoComplete="given-name"
-                className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
                 name="nome"
                 value={formData.nome}
                 onChange={handleChange}
+                className={`block w-full rounded-md px-3.5 py-2 text-base text-white
+                  bg-white/5 placeholder:text-gray-500
+                  ${
+                    errors.nome
+                      ? "ring-2 ring-red-500"
+                      : "ring-1 ring-white/10 focus:ring-2 focus:ring-indigo-500"
+                  }`}
               />
             </div>
+
+            {errors.nome && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.nome[0]}
+              </p>
+            )}
+
           </div>
           <div className="flex flex-col gap-1 ">
           <label className="block text-sm/6 font-semibold text-white">
@@ -125,7 +163,7 @@ export default function Alunos(){
           </label>
           <div className="mt-1.5">
           <select 
-          className={`${StyleLocal.selecaoSexo} "block w-full rounded-md bg-white/5 px-3.5 py-2.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"`}
+          className={`${StyleLocal.selecaoSexo} block w-full rounded-md bg-white/5 px-3.5 py-2.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500`}
           name="sexo"
          
           value={formData.sexo}
@@ -145,13 +183,24 @@ export default function Alunos(){
               <input
                 id="company"
                 type="text"
-                autoComplete="organization"
-                className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                autoComplete="organization"              
                 name="endereco"
                 value={formData.endereco}
                 onChange={handleChange}
+                className={`block w-full rounded-md px-3.5 py-2 text-base text-white
+                  bg-white/5 placeholder:text-gray-500
+                  ${
+                    errors.endereco
+                      ? "ring-2 ring-red-500"
+                      : "ring-1 ring-white/10 focus:ring-2 focus:ring-indigo-500"
+                  }`}
               />
             </div>
+            {errors.endereco && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.endereco[0]}
+              </p>
+            )}
           </div>
           <div className="sm:col-span-2">
             <label htmlFor="email" className="block text-sm/6 font-semibold text-white">
@@ -175,33 +224,27 @@ export default function Alunos(){
             </label>
             <div className="mt-2.5">
               <div className="flex rounded-md bg-white/5 outline-1 -outline-offset-1 outline-white/10 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-500">
-                {/* <div className="grid shrink-0 grid-cols-1 focus-within:relative">
-                  <select
-                    id="country"
-                    name="country"
-                    autoComplete="country"
-                    aria-label="Country"
-                    className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-transparent py-2 pr-7 pl-3.5 text-base text-gray-400 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
-                  >
-                    <option>US</option>
-                    <option>CA</option>
-                    <option>EU</option>
-                  </select>
-                  <ChevronDownIcon
-                    aria-hidden="true"
-                    className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-400 sm:size-4"
-                  />
-                </div> */}
                 <input
                   id="phone-number"
                   type="text"
                   placeholder="(xx)xxxxx-xxxx"
-                  className="block min-w-0 grow bg-transparent py-1.5 pr-3 pl-1 text-base text-white placeholder:text-gray-500 focus:outline-none sm:text-sm/6"
                   name="telefone"
                   value={formData.telefone}
                   onChange={handleChange}
+                  className={`block w-full rounded-md px-3.5 py-2 text-base text-white
+                    bg-white/5 placeholder:text-gray-500
+                    ${
+                      errors.telefone
+                        ? "ring-2 ring-red-500"
+                        : "ring-1 ring-white/10 focus:ring-2 focus:ring-indigo-500"
+                    }`}
                 />
               </div>
+              {errors.telefone && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.telefone[0]}
+              </p>
+            )}
             </div>
             
 
@@ -227,14 +270,25 @@ export default function Alunos(){
             <div className="mt-2.5">
               <input
                 id="data_nascimento"
-                type="data_nascimento"
+                type="date"
                 autoComplete="data_nascimento"
-                className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
                 name="data_nascimento"
                 value={formData.data_nascimento}
                 onChange={handleChange}
+                className={`block w-full rounded-md px-3.5 py-2 text-base text-white
+                  bg-white/5 placeholder:text-gray-500
+                  ${
+                    errors.data_nascimento
+                      ? "ring-2 ring-red-500"
+                      : "ring-1 ring-white/10 focus:ring-2 focus:ring-indigo-500"
+                  }`}
               />
             </div>
+            {errors.data_nascimento && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.data_nascimento[0]}
+              </p>
+            )}
           </div>
 
           {/* <label className="flex items-center cursor-pointer gap-3">
@@ -288,12 +342,36 @@ export default function Alunos(){
       </form>
     </div>
 
+    {/* {!errors  &&
+    <h1>Algo deu errado: {errors.data}</h1>
+    } */}
+
+
+{/* 
+{errors.email && (
+  <p className="text-red-500 text-sm mt-1">
+    {errors.email[0]}
+  </p>
+)}
+
+{errors.data_nascimento && (
+  <p className="text-red-500 text-sm mt-1">
+    {errors.data_nascimento[0]}
+  </p>
+)}
+
+{errors.data_pagamento && (
+  <p className="text-red-500 text-sm mt-1">
+    {errors.data_pagamento[0]}
+  </p>
+)} */}
+
     {modalSucess == true &&
         <ModalSucesso/>
         }
-        {modalError == true &&
+        {/* {modalError == true &&
         <ModalError/>
-        }
+        } */}
             </div>
             
         </div>
