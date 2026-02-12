@@ -1,0 +1,11 @@
+.DivMenu{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.DivDashboard{
+    margin-top: 80px;
+    border-color: rgb(165, 163, 42);
+    
+}
+

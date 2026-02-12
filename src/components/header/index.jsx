@@ -8,7 +8,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'Alunos', href: '/alunos' },
+    { name: 'Clientes', href: '/clientes' },
     { name: 'Equipe', href: '/equipe' },
     { name: 'Planos', href: '/planos' },
     // { name: 'Anotações', href: '#' },
@@ -18,8 +18,8 @@ const navigation = [
 export default function Cabecalho(){
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     return(
-        <div>
-        <header className="absolute inset-x-0 top-0 z-50">
+        <div >
+        <header className="absolute inset-x-0 top-0 z-50 bg-purple-950">
         <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
           <div className="flex lg:flex-1">
             <a href="#" className="-m-1.5 p-1.5">

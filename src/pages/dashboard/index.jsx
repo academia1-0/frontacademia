@@ -1,0 +1,125 @@
+'use client'
+
+import Style from '../../app/globals.css'
+import StyleLocal from './StyleLocal.module.css'
+import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import HEADER from '../../components/header/index'
+import ListaClientes from '../listaclientes/index'
+import { useState } from 'react'
+
+
+
+const navigation = [
+  { name: 'Dashboard', current: true },
+  { name: 'Equipe', current: false },
+  { name: 'Clientes', current: false },
+  { name: 'Financeiro', current: false },
+  { name: 'Comunicados', current: false },
+]
+
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
+
+export default function Example() {
+    const [activePage, setActivePage] = useState('Dashboard')
+  return (
+    
+      <div>
+      <HEADER/>
+      <div className=" min-h-full" >
+        <Disclosure as="nav" className="bg-gray-800/50">
+          <div className={`${StyleLocal.DivDashboard } mx-auto max-w-7xl px-4 sm:px-6 lg:px-8`}>
+            <div className="flex h-16 items-center justify-between">
+              <div className="flex items-center">
+               
+                <div className="hidden md:block">
+                  <div className="ml-10 flex items-baseline space-x-4">
+                    {navigation.map((item) => (
+                     <button
+                     key={item.name}
+                     onClick={() => setActivePage(item.name)}
+                     className={classNames(
+                       activePage === item.name
+                         ? 'bg-gray-950/50 text-white'
+                         : 'text-gray-300 hover:bg-white/5 hover:text-white',
+                       'rounded-md px-3 py-2 text-sm font-medium',
+                     )}
+                   >
+                     {item.name}
+                   </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="hidden md:block">
+                <div className="ml-4 flex items-center md:ml-6">
+
+                 
+                </div>
+              </div>
+              <div className="-mr-2 flex md:hidden">
+                {/* Mobile menu button */}
+                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500">
+                  <span className="absolute -inset-0.5" />
+                  <span className="sr-only">Open main menu</span>
+                  <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
+                  <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
+                </DisclosureButton>
+              </div>
+            </div>
+          </div>
+
+          <DisclosurePanel className="md:hidden">
+            <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
+              {navigation.map((item) => (
+                <DisclosureButton
+                  key={item.name}
+                  as="a"
+                  href={item.href}
+                  aria-current={item.current ? 'page' : undefined}
+                  className={classNames(
+                    item.current ? 'bg-gray-950/50 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white',
+                    'block rounded-md px-3 py-2 text-base font-medium',
+                  )}
+                >
+                  {item.name}
+                </DisclosureButton>
+              ))}
+            </div>
+          </DisclosurePanel>
+        </Disclosure>
+
+        <header className="relative bg-gray-800 after:pointer-events-none after:absolute after:inset-x-0 after:inset-y-0 after:border-y after:border-white/10">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <h1 className="text-3xl font-bold tracking-tight text-white">Dashboard</h1>
+          </div>
+        </header>
+        <main>
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            {activePage === 'Dashboard' && 
+                <div>Conteúdo do Dashboard</div>
+            }
+            
+            {activePage === 'Clientes' && 
+            <ListaClientes />
+            }
+            {activePage === 'Equipe' && 
+                <div>Conteúdo da Equipe</div>
+            }
+            {activePage === 'Financeiro' &&
+                <div>Conteúdo do Financeiro</div>
+            }
+            {activePage === 'Comunicados' &&
+                <div>Conteúdo de Comunicados</div>
+            }
+
+          </div>
+        </main>
+      </div>
+      </div>
+   
+  )
+}

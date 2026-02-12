@@ -9,7 +9,7 @@ import axios from 'axios' //UTILIZAR QUANDO O PROJETO FOR USAR TOKEN, AUTENTUCAÃ
 import ModalSucesso from '../../components/modal/modalsucesso/index'
 import ModalError from '../../components/modal/modalerror/index'
 
-export default function Alunos(){
+export default function Clientes(){
 
   const [formData, setFormData] = useState({
     nome: '',
