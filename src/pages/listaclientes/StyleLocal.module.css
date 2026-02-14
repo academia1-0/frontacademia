@@ -1,6 +1,15 @@
-.Corfont{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 50;
-    font-weight: bolder;
-    color: brown;
-}
+
+.compClient {
+    transition: background-color 0.2s ease;
+  }
+  
+  .compClient:hover {
+    background-color: #f3f4f6; /* cinza claro */
+    cursor: pointer;
+  }
+  
+  /* textos dentro do cliente */
+  .compClient:hover .clientText {
+    color: #5d89c4; /* azul */
+    transition: color 0.2s ease;
+  }
