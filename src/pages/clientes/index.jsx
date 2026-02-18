@@ -30,12 +30,6 @@ export default function Clientes(){
   const [modalSucess, setModalSucess] = useState(false);
   const [modalError] = useState(true);
 
-//   const handleChange = (e) => {
-//     setFormData({
-//         ...formData,
-//         [e.target.name]: e.target.value
-//     });
-// };
 
 
 const handleChange = (e) => {
