@@ -82,44 +82,6 @@ useEffect(() => {
   }, [id])
 
 
-
-  //-------------usando axios
-//   const handleSubmit = async (e) => {
-//     e.preventDefault(); // Previne o comportamento padrão do formulário
-
-//     try {
-//         // Fazendo a requisição com axios
-//         const response = await axios.post('http://127.0.0.1:8000/api/clientes', formData);
-
-//         // Verifica se a requisição foi bem-sucedida
-//         if (response.status === 200 || response.status === 201) {
-//             setMessage(response.data.message); // Configura a mensagem de sucesso
-//             setErrors({}); // Limpa os erros
-//             setModalSucess(true) // Configura o estado de sucesso para aparecer o modal
-//         }
-//     } catch (error) {
-//         // Trata os erros
-
-//         if (error.response) {
-//           // Loga tudo que veio do backend
-//           console.error('Status:', error.response.status);
-//           console.error('Data:', error.response.data);
-  
-//           // Caso específico de validação Laravel (422)
-//           if (error.response.status === 422) {
-//               setErrors(error.response.data.erros ?? {}); // <-- correto
-//           } else {
-//               setMessage(error.response.data.message || 'Erro inesperado.');
-//           }
-//       } else {
-//           // Erro de rede ou Axios
-//           console.error('Erro Axios:', error);
-//           setMessage('Erro de conexão com o servidor.');
-//       }
-
-//     }
-// };
-
 const handleSubmit = async (e) => {
   e.preventDefault()
 
@@ -323,53 +285,10 @@ const handleSubmit = async (e) => {
             )}
           </div>
 
-          {/* <label className="flex items-center cursor-pointer gap-3">
-              <span className="text-sm">Pagamento</span>
-
-              <div className={`${StyleLocal.btnPagamento} relative`} >
-                <input
-                  type="checkbox"
-                  className="sr-only"
-                  checked={ativo}
-                  onChange={() => setAtivo(!ativo)}
-                />
-
-                <div className={`block w-12 h-6 rounded-full transition 
-                  ${ativo ? 'bg-green-500' : 'bg-gray-300'}`}
-                />
-
-                <div className={`absolute left-1 top-1 w-4 h-4 bg-black rounded-full transition
-                  ${ativo ? 'translate-x-6' : ''}`}
-                />
-              </div>
-
-      
-            </label>
-
-            <div className="sm:col-span-2">
-            <label htmlFor="data_pagamento" className="block text-sm/6 font-semibold text-white">
-              Data de pagamento
-            </label>
-            <div className="mt-2.5">
-              <input
-                id="data_pagamento"
-                name="data_pagamento"
-                type="data_pagamento"
-                autoComplete="data_pagamento"
-                className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
-              />
-            </div>
-          </div> */}
-
          
         </div>
         <div className="mt-10">
-          {/* <button
-            type="submit"
-            className="block w-full rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-          >
-            Salvar
-          </button> */}
+
           <button type="submit" className="block w-full rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
           >
             {id ? 'Atualizar Cliente' : 'Salvar'}
@@ -382,8 +301,7 @@ const handleSubmit = async (e) => {
     {modalSucess == true &&
         <ModalSucesso/>
         }
-
-            </div>
+        </div>
             
         </div>
     )
