@@ -8,7 +8,7 @@ import StyleLocal from './StyleLocal.module.css'
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 import ModalAviso from '../../components/modal/modalaviso/index'
-
+import { useRouter } from 'next/navigation'
 
 export default function ListaClientes(){
 
@@ -25,7 +25,12 @@ export default function ListaClientes(){
   const [nomeCliente, setNomeCliente] = useState('')
   //Barra de aviso Toast
   const [toast, setToast] = useState(false)
+  //Editar 
+  const router = useRouter()
 
+  const editarCliente = (cliente) => {
+    router.push(`clientes/${cliente.id}`)
+  }
 
   const abrirModalDelete = (cliente) => {
     setClienteSelecionado(cliente)
@@ -73,6 +78,8 @@ export default function ListaClientes(){
     }
   }
 
+  //Editar cliente
+  
 
 
 
