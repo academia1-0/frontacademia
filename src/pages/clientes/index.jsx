@@ -90,13 +90,13 @@ const handleChange = (e) => {
 
 
     return(
-        <div className="bg-gray-900">
+        <div className="bg-white-800">
             <HEADER/>
             <div className="relative isolate px-6 pt-14 lg:px-8">
    
 
-    <div className="isolate bg-gray-900 px-6 py-24 sm:py-32 lg:px-8">
-      <div
+    <div className="isolate bg-gray-800 px-6 py-24 sm:py-32 lg:px-8">
+      {/* <div
         aria-hidden="true"
         className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
       >
@@ -107,7 +107,7 @@ const handleChange = (e) => {
           }}
           className="relative left-1/2 -z-10 aspect-1155/678 w-144.5 max-w-none -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-40rem)] sm:w-288.75"
         />
-      </div>
+      </div> */}
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">Dados do Aluno</h2>
         <p className="mt-2 text-lg/8 text-gray-400">Preencha os dados corretamente</p>

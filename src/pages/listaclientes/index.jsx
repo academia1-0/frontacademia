@@ -71,7 +71,7 @@ export default function ListaClientes(){
 
       setTimeout(() => {
         setToast(false)
-      }, 3000)
+      }, 4000)
   
     } catch (error) {
       console.error(error)

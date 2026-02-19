@@ -14,7 +14,7 @@ export default function Example() {
  
 
   return (
-    <div className="bg-purple-950">
+    <div className="bg-gray-800">
       <HEADER>
 
       </HEADER>

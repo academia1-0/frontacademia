@@ -35,6 +35,8 @@ export default function Clientes(){
   const params = useParams()
   const id = params?.id
   
+  const [toast, setToast] = useState(false)
+  const [nomeCliente, setNomeCliente] = useState('')
 
 const handleChange = (e) => {
   const { name, value } = e.target;
@@ -74,6 +76,7 @@ useEffect(() => {
             pagamento: cliente.pagamento || 1,
             data_pagamento: cliente.data_pagamento || ''
           })
+          setNomeCliente(cliente.nome)
         })
         .catch(error => {
           console.error(error)
@@ -97,6 +100,13 @@ const handleSubmit = async (e) => {
 
     setErrors({})
     setModalSucess(true)
+    
+    
+    setToast(true)
+
+    setTimeout(() => {
+      setToast(false)
+    }, 4000)
 
   } catch (error) {
 
@@ -291,16 +301,26 @@ const handleSubmit = async (e) => {
 
           <button type="submit" className="block w-full rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
           >
-            {id ? 'Atualizar Cliente' : 'Salvar'}
+            {id ? 'Atualizar' : 'Salvar'}
           </button>
 
         </div>
       </form>
     </div>
 
-    {modalSucess == true &&
+    {/* {modalSucess == true &&
         <ModalSucesso/>
-        }
+        } */}
+
+
+        {toast && (
+          <div className="fixed bottom-5 left-1/2 -translate-x-1/2 
+                          bg-emerald-600 text-white 
+                          px-6 py-3 rounded-lg shadow-lg
+                          animate-fadeInOut transition-opacity duration-500">
+            ✅ {nomeCliente} atualizado com sucesso!
+          </div>
+        )}
         </div>
             
         </div>
