@@ -50,11 +50,7 @@ const handleChange = (e) => {
   }
 };
 
-// useEffect(() => {
-//   setErrors({
-//     nome: ["Teste de erro funcionando"]
-//   })
-// }, [])
+
   //-------------usando axios
   const handleSubmit = async (e) => {
     e.preventDefault(); // Previne o comportamento padrão do formulário
@@ -76,10 +72,6 @@ const handleChange = (e) => {
           // Loga tudo que veio do backend
           console.error('Status:', error.response.status);
           console.error('Data:', error.response.data);
-          // if (error.response?.status === 422) {
-          //   console.log("ERROS BACKEND:", error.response.data.errors);
-          //   setErrors(error.response.data.errors ?? {});
-          // }
   
           // Caso específico de validação Laravel (422)
           if (error.response.status === 422) {
@@ -336,36 +328,10 @@ const handleChange = (e) => {
       </form>
     </div>
 
-    {/* {!errors  &&
-    <h1>Algo deu errado: {errors.data}</h1>
-    } */}
-
-
-{/* 
-{errors.email && (
-  <p className="text-red-500 text-sm mt-1">
-    {errors.email[0]}
-  </p>
-)}
-
-{errors.data_nascimento && (
-  <p className="text-red-500 text-sm mt-1">
-    {errors.data_nascimento[0]}
-  </p>
-)}
-
-{errors.data_pagamento && (
-  <p className="text-red-500 text-sm mt-1">
-    {errors.data_pagamento[0]}
-  </p>
-)} */}
-
     {modalSucess == true &&
         <ModalSucesso/>
         }
-        {/* {modalError == true &&
-        <ModalError/>
-        } */}
+
             </div>
             
         </div>

@@ -48,19 +48,6 @@ export default function ListaClientes(){
   }, [])
 
   //Deletar cliente
-  // const deletarCliente = async (id) => {
-  //   setModalAviso(true);
-  //   if(modalaviso==true){
-  //     try {
-  //       await axios.delete(`http://localhost:8000/api/clientes/${id}`)
-  //       console.log('Cliente deletado')
-  //     } catch (error) {
-  //       console.error(error.response?.data)
-  //     }
-  //   }
-
-    
-  // }
   const deletarCliente = async () => {
     if (!clienteSelecionado) return //Evita erro Caso o cliente for null
 
