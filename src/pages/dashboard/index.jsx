@@ -6,13 +6,14 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import HEADER from '../../components/header/index'
 import ListaClientes from '../listaclientes/index'
+import ListaFuncionario from '../listafuncionarios'
 import { useState } from 'react'
 
 
 
 const navigation = [
   { name: 'Dashboard', current: true },
-  { name: 'Equipe', current: false },
+  { name: 'Funcionarios', current: false },
   { name: 'Clientes', current: false },
   { name: 'Financeiro', current: false },
   { name: 'Comunicados', current: false },
@@ -106,8 +107,8 @@ export default function Example() {
             {activePage === 'Clientes' && 
             <ListaClientes />
             }
-            {activePage === 'Equipe' && 
-                <div>Conteúdo da Equipe</div>
+            {activePage === 'Funcionarios' && 
+                <ListaFuncionario/>
             }
             {activePage === 'Financeiro' &&
                 <div>Conteúdo do Financeiro</div>

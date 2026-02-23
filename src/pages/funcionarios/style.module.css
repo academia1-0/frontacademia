@@ -1,0 +1,17 @@
+.btnPagamento{
+    margin: 20px;
+}
+
+/* .selecaoSexo{
+   
+    font-weight: bolder;
+    color:black;
+} */
+.selecaoSexo:hover{
+    color:black;
+    
+}
+.selecaoOpSexo{
+    color: gray;
+    font-weight: bolder;
+}

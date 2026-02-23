@@ -36,7 +36,7 @@ export default function Example() {
               Academia ProEvolution
             </h1>
             <p className="mt-8 text-lg font-medium text-pretty text-gray-400 sm:text-xl/8">
-           Mais organização + controle e + resultados 
+           Mais Organização + Controle e Resultados 
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
