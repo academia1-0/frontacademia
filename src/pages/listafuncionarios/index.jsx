@@ -12,11 +12,9 @@ import { useRouter } from 'next/navigation'
 
 export default function ListaFuncionario(){
 
-  const [funcionario, setFuncionario] = useState([])
+  const [funcionarios, setFuncionarios] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-
-  const [modalaviso, setModalAviso] = useState(false)
 
 
   //para o modal de alerta
@@ -42,7 +40,7 @@ export default function ListaFuncionario(){
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/api/funcionario')
       .then(response => {
-        setFuncionario(response.data)
+        setFuncionarios(response.data)
         setLoading(false)
       })
       .catch(error => {
@@ -60,7 +58,7 @@ export default function ListaFuncionario(){
       await axios.delete(`http://127.0.0.1:8000/api/funcionario/${funcionarioSelecionado.id}`)
   
       // Atualiza lista removendo Funcionario deletado
-      setFuncionario(prev =>
+      setFuncionarios(prev =>
         prev.filter(c => c.id !== funcionarioSelecionado.id)
       )
 
@@ -91,7 +89,7 @@ export default function ListaFuncionario(){
             <div>
 
               <ul role="list" className="divide-y divide-white/5">
-                {funcionario.map((funcionario) => (
+                {funcionarios.map((funcionario) => (
                   <li key={funcionario.email} className={`${StyleLocal.compClient} relative flex justify-between gap-x-6 py-10 pr-5`}>
 
                   <div className="absolute top-2 right-2 flex gap-2 ">
@@ -160,7 +158,7 @@ export default function ListaFuncionario(){
           aberto={modalAberto}
           onClose={() => setModalAberto(false)}
           onConfirm={deletarFuncionario}
-          funcionario={funcionarioSelecionado}
+          cliente={funcionarioSelecionado}
         />
         {/* Barra de aviso */}
         {toast && (

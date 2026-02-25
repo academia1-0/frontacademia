@@ -16,7 +16,6 @@ export default function ListaClientes(){
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const [modalaviso, setModalAviso] = useState(false)
 
 
   //para o modal de alerta
