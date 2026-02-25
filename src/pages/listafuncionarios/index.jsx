@@ -27,8 +27,10 @@ export default function ListaFuncionario(){
   const router = useRouter()
 
   const editarFuncionario = (funcionario) => {
-    router.push(`funcionario/${funcionario.id}`)
+    router.push(`funcionarios/${funcionario.id}`)
   }
+
+ 
 
   const abrirModalDelete = (funcionario) => {
     setFuncionarioSelecionado(funcionario)

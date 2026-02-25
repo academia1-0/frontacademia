@@ -10,7 +10,7 @@ import ModalSucesso from '../../../components/modal/modalsucesso/index'
 import ModalError from '../../../components/modal/modalerror/index'
 import { useParams } from 'next/navigation'
 
-export default function Clientes(){
+export default function Funcionarios(){
 
   const [formData, setFormData] = useState({
     nome: '',
@@ -19,8 +19,9 @@ export default function Clientes(){
     data_nascimento: '',
     endereco: '',
     sexo: 'Outros',
-    pagamento: 1,
-    data_pagamento: '31/03/2026'
+    formacao: '',
+    cargo: '',
+    salario: '',
 });
 
   const [ativo, setAtivo] = useState(false)
@@ -31,7 +32,9 @@ export default function Clientes(){
   const [modalSucess, setModalSucess] = useState(false);
   const [modalError] = useState(true);
 
-  //paramentros para editar clientes
+
+
+//paramentros para editar clientes
   const params = useParams()
   const id = params?.id
   
@@ -56,27 +59,30 @@ const handleChange = (e) => {
   }
 };
 
-//Usando para buscar cliente
+//Usando para buscar funcionario
 useEffect(() => {
     if (id) {
-      axios.get(`http://127.0.0.1:8000/api/clientes/${id}`)
+      axios.get(`http://127.0.0.1:8000/api/funcionario/${id}`)
         .then(response => {
   
-          const cliente = response.data
+          const funcionario = response.data
   
           setFormData({
-            nome: cliente.nome || '',
-            email: cliente.email || '',
-            telefone: cliente.telefone || '',
-            data_nascimento: cliente.data_nascimento
-              ? cliente.data_nascimento.split('T')[0]
+            nome: funcionario.nome || '',
+            email: funcionario.email || '',
+            telefone: funcionario.telefone || '',
+            data_nascimento: funcionario.data_nascimento
+              ? funcionario.data_nascimento.split('T')[0]
               : '',
-            endereco: cliente.endereco || '',
-            sexo: cliente.sexo || 'Outros',
-            pagamento: cliente.pagamento || 1,
-            data_pagamento: cliente.data_pagamento || ''
+            endereco: funcionario.endereco || '',
+            sexo: funcionario.sexo || 'Outros',
+            pagamento: funcionario.pagamento || 1,
+            data_pagamento: funcionario.data_pagamento || '',
+            formacao: funcionario.formacao || '',
+            cargo: funcionario.cargo || '',
+            cargo: funcionario.cargo || '',
           })
-          setNomeCliente(cliente.nome)
+          setNomeCliente(funcionario.nome)
         })
         .catch(error => {
           console.error(error)
@@ -85,60 +91,49 @@ useEffect(() => {
   }, [id])
 
 
-const handleSubmit = async (e) => {
-  e.preventDefault()
-
-  try {
-
-    if (id) {
-      // EDITAR
-      await axios.put(`http://127.0.0.1:8000/api/clientes/${id}`, formData)
-    } else {
-      // CRIAR
-      await axios.post('http://127.0.0.1:8000/api/clientes', formData)
-    }
-
-    setErrors({})
-    setModalSucess(true)
-    
-    
-    setToast(true)
-
-    setTimeout(() => {
-      setToast(false)
-    }, 4000)
-
-  } catch (error) {
-
-    if (error.response?.status === 422) {
-      setErrors(error.response.data.erros ?? {})
-    } else {
-      console.error(error)
+  //-------------usando axios
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+  
+    try {
+  
+      if (id) {
+        // EDITAR
+        await axios.put(`http://127.0.0.1:8000/api/funcionario/${id}`, formData)
+      } else {
+        // CRIAR
+        await axios.post('http://127.0.0.1:8000/api/funcionario', formData)
+      }
+  
+      setErrors({})
+      setModalSucess(true)
+      
+      
+      setToast(true)
+  
+      setTimeout(() => {
+        setToast(false)
+      }, 4000)
+  
+    } catch (error) {
+  
+      if (error.response?.status === 422) {
+        setErrors(error.response.data.erros ?? {})
+      } else {
+        console.error(error)
+      }
     }
   }
-}
-
 
 
     return(
-        <div className="bg-gray-900">
+        <div className="bg-white-800">
             <HEADER/>
             <div className="relative isolate px-6 pt-14 lg:px-8">
    
 
-    <div className="isolate bg-gray-900 px-6 py-24 sm:py-32 lg:px-8">
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-      >
-        <div
-          style={{
-            clipPath:
-              'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-          }}
-          className="relative left-1/2 -z-10 aspect-1155/678 w-144.5 max-w-none -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-40rem)] sm:w-288.75"
-        />
-      </div>
+    <div className="isolate bg-gray-800 px-6 py-24 sm:py-32 lg:px-8">
+     
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">Dados do Funcionário</h2>
         <p className="mt-2 text-lg/8 text-gray-400">Preencha os dados corretamente</p>
@@ -266,7 +261,7 @@ const handleSubmit = async (e) => {
             
 
           </div>
-          
+         
         <div className="sm:col-span-2">
             <label htmlFor="data_nascimento" className="block text-sm/6 font-semibold text-white">
               Data de nascimento
@@ -295,33 +290,151 @@ const handleSubmit = async (e) => {
             )}
           </div>
 
+          <div>
+            <label htmlFor="first-name" className="block text-sm/6 font-semibold text-white">
+              Formação
+            </label>
+            <div className="mt-2.5">
+              <input
+                id="first-name"
+                type="text"
+                autoComplete="given-name"
+                name="formacao"
+                value={formData.formacao}
+                onChange={handleChange}
+                className={`block w-full rounded-md px-3.5 py-2 text-base text-white
+                  bg-white/5 placeholder:text-gray-500
+                  ${
+                    errors.formacao
+                      ? "ring-2 ring-red-500"
+                      : "ring-1 ring-white/10 focus:ring-2 focus:ring-indigo-500"
+                  }`}
+              />
+            </div>
+
+            {errors.formacao && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.formacao[0]}
+              </p>
+            )}
+
+          </div>
+          <div>
+            <label htmlFor="first-name" className="block text-sm/6 font-semibold text-white">
+              Cargo
+            </label>
+            <div className="mt-2.5">
+              <input
+                id="first-name"
+                type="text"
+                autoComplete="given-name"
+                name="cargo"
+                value={formData.cargo}
+                onChange={handleChange}
+                className={`block w-full rounded-md px-3.5 py-2 text-base text-white
+                  bg-white/5 placeholder:text-gray-500
+                  ${
+                    errors.cargo
+                      ? "ring-2 ring-red-500"
+                      : "ring-1 ring-white/10 focus:ring-2 focus:ring-indigo-500"
+                  }`}
+              />
+            </div>
+
+            {errors.cargo && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.cargo[0]}
+              </p>
+            )}
+
+          </div>
+
+          <div>
+            <label htmlFor="first-name" className="block text-sm/6 font-semibold text-white">
+              Salario
+            </label>
+            <div className="mt-2.5">
+              <input
+                id="first-name"
+                type="text"
+                autoComplete="given-name"
+                name="salario"
+                value={formData.salario}
+                onChange={handleChange}
+                className={`block w-full rounded-md px-3.5 py-2 text-base text-white
+                  bg-white/5 placeholder:text-gray-500
+                  ${
+                    errors.salario
+                      ? "ring-2 ring-red-500"
+                      : "ring-1 ring-white/10 focus:ring-2 focus:ring-indigo-500"
+                  }`}
+              />
+            </div>
+
+            {errors.salario && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.salario[0]}
+              </p>
+            )}
+
+          </div>
+
+          {/* <label className="flex items-center cursor-pointer gap-3">
+              <span className="text-sm">Pagamento</span>
+
+              <div className={`${StyleLocal.btnPagamento} relative`} >
+                <input
+                  type="checkbox"
+                  className="sr-only"
+                  checked={ativo}
+                  onChange={() => setAtivo(!ativo)}
+                />
+
+                <div className={`block w-12 h-6 rounded-full transition 
+                  ${ativo ? 'bg-green-500' : 'bg-gray-300'}`}
+                />
+
+                <div className={`absolute left-1 top-1 w-4 h-4 bg-black rounded-full transition
+                  ${ativo ? 'translate-x-6' : ''}`}
+                />
+              </div>
+
+      
+            </label>
+
+            <div className="sm:col-span-2">
+            <label htmlFor="data_pagamento" className="block text-sm/6 font-semibold text-white">
+              Data de pagamento
+            </label>
+            <div className="mt-2.5">
+              <input
+                id="data_pagamento"
+                name="data_pagamento"
+                type="data_pagamento"
+                autoComplete="data_pagamento"
+                className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+              />
+            </div>
+          </div> */}
+
          
         </div>
         <div className="mt-10">
-
-          <button type="submit" className="block w-full rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+          <button
+            type="submit"
+            className="block w-full rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
           >
-            {id ? 'Atualizar' : 'Salvar'}
+            Salvar
           </button>
-
         </div>
       </form>
     </div>
 
-    {/* {modalSucess == true &&
+    {modalSucess == true &&
         <ModalSucesso/>
-        } */}
+        }
 
-
-        {toast && (
-          <div className="fixed bottom-5 left-1/2 -translate-x-1/2 
-                          bg-emerald-600 text-white 
-                          px-6 py-3 rounded-lg shadow-lg
-                          animate-fadeInOut transition-opacity duration-500">
-            ✅ {nomeCliente} atualizado com sucesso!
-          </div>
-        )}
-        </div>
+            </div>
             
         </div>
     )
