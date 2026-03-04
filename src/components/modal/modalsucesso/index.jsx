@@ -40,7 +40,7 @@ export default function Example() {
                     </DialogTitle>
                     <div className="mt-2">
                       <p className="text-sm text-gray-400">
-                       O cadastro foi realizado com sucesso.
+                       Processo realizado com sucesso.
                       </p>
                     </div>
                   </div>

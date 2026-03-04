@@ -80,7 +80,7 @@ useEffect(() => {
             data_pagamento: funcionario.data_pagamento || '',
             formacao: funcionario.formacao || '',
             cargo: funcionario.cargo || '',
-            cargo: funcionario.cargo || '',
+            salario: funcionario.salario || '',
           })
           setNomeCliente(funcionario.nome)
         })
