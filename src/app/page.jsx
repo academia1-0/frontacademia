@@ -25,7 +25,7 @@ export default function Example() {
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm/6 text-red-400 ring-1 ring-white/10 hover:ring-white/20">
               Planos disponíveis{' '}
-              <Link href="#" className="font-semibold text-indigo-400">
+              <Link href="/listaplanos" className="font-semibold text-indigo-400">
                 <span aria-hidden="true" className="absolute inset-0" />
                 Verificar <span aria-hidden="true">&rarr;</span>
               </Link>
