@@ -1,35 +1,60 @@
-'Use client'
+'use client'
 import Style from '../../app/globals.css'
 import StyleLocal from './StyleLocal.module.css'
 import HEADER from '../../components/header/index'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import banner1 from '../../assets/banner1.jpg'
 
-
-const callouts = [
-    {
-      name: 'Desk and Office',
-      description: 'Work from home accessories',
-      imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/home-page-02-edition-01.jpg',
-      imageAlt: 'Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug.',
-      href: '#',
-    },
-    {
-      name: 'Self-Improvement',
-      description: 'Journals and note-taking',
-      imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/home-page-02-edition-02.jpg',
-      imageAlt: 'Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant.',
-      href: '#',
-    },
-    {
-      name: 'Travel',
-      description: 'Daily commute essentials',
-      imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/home-page-02-edition-03.jpg',
-      imageAlt: 'Collection of four insulated travel bottles on wooden shelf.',
-      href: '#',
-    },
-  ]
+// const callouts = [
+//     {
+//       name: 'Desk and Office',
+//       description: 'Work from home accessories',
+//       imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/home-page-02-edition-01.jpg',
+//       imageAlt: 'Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug.',
+//       href: '#',
+//     },
+//     {
+//       name: 'Self-Improvement',
+//       description: 'Journals and note-taking',
+//       imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/home-page-02-edition-02.jpg',
+//       imageAlt: 'Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant.',
+//       href: '#',
+//     },
+//     {
+//       name: 'Travel',
+//       description: 'Daily commute essentials',
+//       imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/home-page-02-edition-03.jpg',
+//       imageAlt: 'Collection of four insulated travel bottles on wooden shelf.',
+//       href: '#',
+//     },
+//   ]
 
   
-  export default function Example() {
+  export default function ListaPlanos() {
+
+      const [planos, setPlanos] = useState([])
+      const [loading, setLoading] = useState(true)
+      const [error, setError] = useState(null)
+
+  //Listar Funcionario
+  useEffect(() => {
+    axios.get('http://127.0.0.1:8000/api/plano')
+      .then(response => {
+        setPlanos(response.data)
+        setLoading(false)
+      })
+      .catch(error => {
+        console.error(error)
+        setError('Erro ao carregar Funcionario')
+        setLoading(false)
+      })
+  }, [])
+
+  if (loading) return <p>Carregando Planos...</p>
+  if (error) return <p>{error}</p>
+
     return (
       <div className="bg-gray-800">
          <HEADER/>
@@ -38,20 +63,24 @@ const callouts = [
             <h2 className="text-2xl font-bold text-gray-100">Planos Disponíveis</h2>
   
             <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:space-y-0 lg:gap-x-6">
-              {callouts.map((callout) => (
-                <div key={callout.name} className="group relative">
+              {planos.map((plano) => (
+                <div key={plano.nome_plano} className="group relative">
                   <img
-                    alt={callout.imageAlt}
-                    src={callout.imageSrc}
+                    alt={plano.valor_plano}
+                    // src={plano.imageSrc}
+                    src={banner1.src}
                     className="w-full rounded-lg bg-white object-cover group-hover:opacity-75 max-sm:h-80 sm:aspect-2/1 lg:aspect-square"
                   />
-                  <h3 className="mt-6 text-sm text-gray-500">
-                    <a href={callout.href}>
+                  <h3 className={`${StyleLocal.fontTitulo} mt-6 text-sm text-gray-500`}>
+                    <a href={plano.href}>
                       <span className="absolute inset-0" />
-                      {callout.name}
+                      {plano.nome_plano}
+                      <p/>
+                      <span className="absolute inset-0 " />
+                      Valor: {plano.valor_plano}
                     </a>
                   </h3>
-                  <p className="text-base font-semibold text-gray-900">{callout.description}</p>
+                  <p className="text-base font-semibold text-gray-900">{plano.beneficios_plano}</p>
                 </div>
               ))}
             </div>
