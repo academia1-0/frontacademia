@@ -77,7 +77,7 @@ import banner1 from '../../assets/banner1.jpg'
                       {plano.nome_plano}
                       <p/>
                       <span className="absolute inset-0 " />
-                      Valor: {plano.valor_plano}
+                      R$ {plano.valor_plano}
                     </a>
                   </h3>
                   <p className="text-base font-semibold text-gray-900">{plano.beneficios_plano}</p>

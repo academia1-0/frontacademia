@@ -128,7 +128,7 @@ const handleChange = (e) => {
             )}
 
           </div>
-          <div className="flex flex-col gap-1 ">
+          {/* <div className="flex flex-col gap-1 ">
           <label className="block text-sm/6 font-semibold text-white">
             Benefícios
           </label>
@@ -145,7 +145,24 @@ const handleChange = (e) => {
             <option value="Personal" className={StyleLocal.selecaoOpSexo}>Personal</option>
           </select>
           </div>
-        </div>
+        </div> */}
+
+          <div className="sm:col-span-2">
+            <label htmlFor="beneficios_plano" className="block text-sm/6 font-semibold text-white">
+              Benefícios
+            </label>
+            <div className="mt-2.5">
+              <textarea
+                id="beneficios_plano"
+                type="beneficios_plano"
+                autoComplete="beneficios_plano"
+                className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                name="beneficios_plano"
+                value={formData.beneficios_plano}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
          
           <div className="sm:col-span-2">
             <label htmlFor="valor_plano" className="block text-sm/6 font-semibold text-white">
@@ -163,65 +180,6 @@ const handleChange = (e) => {
               />
             </div>
           </div>
-          {/* <div className="sm:col-span-2">
-            <label htmlFor="phone-number" className="block text-sm/6 font-semibold text-white">
-              Número do telefone
-            </label>
-            <div className="mt-2.5">
-              <div className="flex rounded-md bg-white/5 outline-1 -outline-offset-1 outline-white/10 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-500">
-                <input
-                  id="phone-number"
-                  type="text"
-                  placeholder="(xx)xxxxx-xxxx"
-                  name="telefone"
-                  value={formData.telefone}
-                  onChange={handleChange}
-                  className={`block w-full rounded-md px-3.5 py-2 text-base text-white
-                    bg-white/5 placeholder:text-gray-500
-                    ${
-                      errors.telefone
-                        ? "ring-2 ring-red-500"
-                        : "ring-1 ring-white/10 focus:ring-2 focus:ring-indigo-500"
-                    }`}
-                />
-              </div>
-              {errors.telefone && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.telefone[0]}
-              </p>
-            )}
-            </div>
-            
-
-          </div> */}
-         
-        {/* <div className="sm:col-span-2">
-            <label htmlFor="data_nascimento" className="block text-sm/6 font-semibold text-white">
-              Data de nascimento
-            </label>
-            <div className="mt-2.5">
-              <input
-                id="data_nascimento"
-                type="date"
-                autoComplete="data_nascimento"
-                name="data_nascimento"
-                value={formData.data_nascimento}
-                onChange={handleChange}
-                className={`block w-full rounded-md px-3.5 py-2 text-base text-white
-                  bg-white/5 placeholder:text-gray-500
-                  ${
-                    errors.data_nascimento
-                      ? "ring-2 ring-red-500"
-                      : "ring-1 ring-white/10 focus:ring-2 focus:ring-indigo-500"
-                  }`}
-              />
-            </div>
-            {errors.data_nascimento && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.data_nascimento[0]}
-              </p>
-            )}
-          </div> */}
 
          
         </div>
