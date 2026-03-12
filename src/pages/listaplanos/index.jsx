@@ -65,11 +65,13 @@ import banner1 from '../../assets/banner1.jpg'
             <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:space-y-0 lg:gap-x-6">
               {planos.map((plano) => (
                 <div key={plano.nome_plano} className="group relative">
-                  <img
+                  {/* <img
                     alt={plano.valor_plano}
-                    // src={plano.imageSrc}
                     src={banner1.src}
                     className="w-full rounded-lg bg-white object-cover group-hover:opacity-75 max-sm:h-80 sm:aspect-2/1 lg:aspect-square"
+                  /> */}
+                  <img  src={`data:${plano.imagem_plano.tipo};base64,${plano.imagem_plano.base64}`} 
+                   className="w-full rounded-lg bg-white object-cover group-hover:opacity-75 max-sm:h-80 sm:aspect-2/1 lg:aspect-square"
                   />
                   <h3 className={`${StyleLocal.fontTitulo} mt-6 text-sm text-gray-500`}>
                     <a href={plano.href}>

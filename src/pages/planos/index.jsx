@@ -17,6 +17,7 @@ export default function Planos(){
     beneficios_plano: '',
     qtd_alunos_plano: '10'
 });
+  const [imagem, setImagem] = useState(null);
 
   const [ativo, setAtivo] = useState(false)
   const [valor, setValor] = useState('')
@@ -47,41 +48,52 @@ const handleChange = (e) => {
 };
 
 
-  //-------------usando axios
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Previne o comportamento padrão do formulário
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-        // Fazendo a requisição com axios
-        const response = await axios.post('http://127.0.0.1:8000/api/plano', formData);
+  try {
 
-        // Verifica se a requisição foi bem-sucedida
-        if (response.status === 200 || response.status === 201) {
-            setMessage(response.data.message); // Configura a mensagem de sucesso
-            setErrors({}); // Limpa os erros
-            setModalSucess(true) // Configura o estado de sucesso para aparecer o modal
-        }
-    } catch (error) {
-        // Trata os erros
+    const data = new FormData();
 
-        if (error.response) {
-          // Loga tudo que veio do backend
-          console.error('Status:', error.response.status);
-          console.error('Data:', error.response.data);
-  
-          // Caso específico de validação Laravel (422)
-          if (error.response.status === 422) {
-              setErrors(error.response.data.erros ?? {}); // <-- correto
-          } else {
-              setMessage(error.response.data.message || 'Erro inesperado.');
-          }
+    data.append('nome_plano', formData.nome_plano);
+    data.append('valor_plano', formData.valor_plano);
+    data.append('beneficios_plano', formData.beneficios_plano);
+    data.append('qtd_alunos_plano', formData.qtd_alunos_plano);
+
+    if (imagem) {
+      data.append('imagem_plano', imagem);
+    }
+
+    const response = await axios.post(
+      'http://127.0.0.1:8000/api/plano',
+      data,
+      // {
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data'
+      //   }
+      // }
+    );
+
+    if (response.status === 200 || response.status === 201) {
+      setMessage(response.data.message);
+      setErrors({});
+      setModalSucess(true);
+    }
+
+  } catch (error) {
+
+    if (error.response) {
+
+      if (error.response.status === 422) {
+        setErrors(error.response.data.errors ?? {});
       } else {
-          // Erro de rede ou Axios
-          console.error('Erro Axios:', error);
-          setMessage('Erro de conexão com o servidor.');
+        setMessage(error.response.data.message || 'Erro inesperado.');
       }
 
+    } else {
+      setMessage('Erro de conexão com o servidor.');
     }
+  }
 };
 
 
@@ -99,6 +111,21 @@ const handleChange = (e) => {
       </div>
       <form  onSubmit={handleSubmit} className="mx-auto mt-16 max-w-xl sm:mt-20" >
         <div className="grid grid-cols-1 gap-x-1 gap-y-6 ">
+        <div>
+          <label className="block text-sm font-semibold text-white">
+            Banner do Plano
+          </label>
+
+          <input
+            type="file"
+            accept="image/*"
+             name="imagem_plano"
+            onChange={(e) => setImagem(e.target.files[0])}
+            className="mt-2 block w-full text-white"
+          />
+          
+        </div>
+
           <div>
             <label htmlFor="nome_plano" className="block text-sm/6 font-semibold text-white">
               Nome do plano
@@ -128,6 +155,7 @@ const handleChange = (e) => {
             )}
 
           </div>
+          
           {/* <div className="flex flex-col gap-1 ">
           <label className="block text-sm/6 font-semibold text-white">
             Benefícios
