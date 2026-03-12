@@ -70,9 +70,8 @@ import banner1 from '../../assets/banner1.jpg'
                     src={banner1.src}
                     className="w-full rounded-lg bg-white object-cover group-hover:opacity-75 max-sm:h-80 sm:aspect-2/1 lg:aspect-square"
                   /> */}
-                  <img  src={`data:${plano.imagem_plano.tipo};base64,${plano.imagem_plano.base64}`} 
-                   className="w-full rounded-lg bg-white object-cover group-hover:opacity-75 max-sm:h-80 sm:aspect-2/1 lg:aspect-square"
-                  />
+                 <img src={`http://127.0.0.1:8000/storage/${plano.imagem_plano}`} className="w-full
+                 //  rounded-lg bg-white object-cover group-hover:opacity-75 max-sm:h-80 sm:aspect-2/1 lg:aspect-square"/>
                   <h3 className={`${StyleLocal.fontTitulo} mt-6 text-sm text-gray-500`}>
                     <a href={plano.href}>
                       <span className="absolute inset-0" />

@@ -63,7 +63,7 @@ const handleSubmit = async (e) => {
     if (imagem) {
       data.append('imagem_plano', imagem);
     }
-
+    console.log(imagem)
     const response = await axios.post(
       'http://127.0.0.1:8000/api/plano',
       data,
@@ -109,7 +109,7 @@ const handleSubmit = async (e) => {
         <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">Dados do Plano</h2>
         <p className="mt-2 text-lg/8 text-gray-400">Preencha os dados corretamente</p>
       </div>
-      <form  onSubmit={handleSubmit} className="mx-auto mt-16 max-w-xl sm:mt-20" >
+      <form    onSubmit={handleSubmit} encType="multipart/form-data" className="mx-auto mt-16 max-w-xl sm:mt-20" >
         <div className="grid grid-cols-1 gap-x-1 gap-y-6 ">
         <div>
           <label className="block text-sm font-semibold text-white">
