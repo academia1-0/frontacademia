@@ -4,7 +4,7 @@ import Style from '../../app/globals.css'
 import StyleLocal from './style.module.css'
 import HEADER from '../../components/header/index'
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import axios from 'axios' //UTILIZAR QUANDO O PROJETO FOR USAR TOKEN, AUTENTUCAÇÃO JWT, REUTILIZAR baseURL, Headers.
 import ModalSucesso from '../../components/modal/modalsucesso/index'
 import ModalError from '../../components/modal/modalerror/index'
@@ -18,6 +18,8 @@ export default function Planos(){
     qtd_alunos_plano: '10'
 });
   const [imagem, setImagem] = useState(null);
+  const [preview, setPreview] = useState(null);
+  
 
   const [ativo, setAtivo] = useState(false)
   const [valor, setValor] = useState('')
@@ -27,6 +29,8 @@ export default function Planos(){
   const [modalSucess, setModalSucess] = useState(false);
   const [modalError] = useState(true);
 
+  
+  const fileInputRef = useRef(null)
 
 
 const handleChange = (e) => {
@@ -46,6 +50,27 @@ const handleChange = (e) => {
     });
   }
 };
+
+//Função para preview da imagem
+const handleImagemChange = (e) => {
+
+  const file = e.target.files[0];
+
+  if (file) {
+    setImagem(file);
+    setPreview(URL.createObjectURL(file));
+  }
+
+};
+
+
+const abrirSeletorImagem = () => {
+
+  if (fileInputRef.current) {
+    fileInputRef.current.click()
+  }
+
+}
 
 
 const handleSubmit = async (e) => {
@@ -67,11 +92,7 @@ const handleSubmit = async (e) => {
     const response = await axios.post(
       'http://127.0.0.1:8000/api/plano',
       data,
-      // {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data'
-      //   }
-      // }
+     
     );
 
     if (response.status === 200 || response.status === 201) {
@@ -110,21 +131,43 @@ const handleSubmit = async (e) => {
         <p className="mt-2 text-lg/8 text-gray-400">Preencha os dados corretamente</p>
       </div>
       <form    onSubmit={handleSubmit} encType="multipart/form-data" className="mx-auto mt-16 max-w-xl sm:mt-20" >
-        <div className="grid grid-cols-1 gap-x-1 gap-y-6 ">
-        <div>
-          <label className="block text-sm font-semibold text-white">
-            Banner do Plano
-          </label>
+      <div
+          onClick={abrirSeletorImagem}
+          className="mt-3 flex items-center justify-center 
+          w-full h-48 border-2 border-dashed border-gray-500 
+          rounded-lg cursor-pointer hover:border-indigo-500
+          transition overflow-hidden"
+        >
 
-          <input
-            type="file"
-            accept="image/*"
-             name="imagem_plano"
-            onChange={(e) => setImagem(e.target.files[0])}
-            className="mt-2 block w-full text-white"
-          />
-          
+          {preview ? (
+
+            <img
+              src={preview}
+              alt="Preview"
+              className="w-full h-full object-cover"
+            />
+
+          ) : (
+
+            <div className="text-center text-gray-400">
+              <p className="text-sm">Clique para adicionar imagem</p>
+              <p className="text-xs">PNG ou JPG</p>
+            </div>
+
+          )}
+
         </div>
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={handleImagemChange}
+          className="hidden"
+        />
+
+        <div onClick={abrirSeletorImagem}></div>
+        <div className="grid grid-cols-1 gap-x-1 gap-y-6 ">
+        
 
           <div>
             <label htmlFor="nome_plano" className="block text-sm/6 font-semibold text-white">
@@ -156,24 +199,7 @@ const handleSubmit = async (e) => {
 
           </div>
           
-          {/* <div className="flex flex-col gap-1 ">
-          <label className="block text-sm/6 font-semibold text-white">
-            Benefícios
-          </label>
-          <div className="mt-1.5">
-          <select 
-          className={`${StyleLocal.selecaoSexo} block w-full rounded-md bg-white/5 px-3.5 py-2.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500`}
-          name="beneficios_plano"
-         
-          value={formData.beneficios_plano}
-          onChange={handleChange}
-          >
-            <option value="Musculacao" className={StyleLocal.selecaoOpSexo} >Musculação</option>
-            <option value="Natacao" className={StyleLocal.selecaoOpSexo}>Natação</option>
-            <option value="Personal" className={StyleLocal.selecaoOpSexo}>Personal</option>
-          </select>
-          </div>
-        </div> */}
+        
 
           <div className="sm:col-span-2">
             <label htmlFor="beneficios_plano" className="block text-sm/6 font-semibold text-white">
