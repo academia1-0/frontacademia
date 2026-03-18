@@ -89,7 +89,7 @@ export default function ListaClientes(){
 
             <div>
 
-              <ul role="list" className="divide-y divide-white/5">
+              <ul role="list" className="divide-y divide-black/5">
                 {clientes.map((cliente) => (
                   <li key={cliente.email} className={`${StyleLocal.compClient} relative flex justify-between gap-x-6 py-10 pr-5`}>
 
@@ -110,11 +110,11 @@ export default function ListaClientes(){
                   </div>
 
                     <div className="flex min-w-0 gap-x-4">
-                      <img
+                      {/* <img
                         alt=""
                         src={cliente.imageUrl}
                         className="size-12 flex-none rounded-full bg-gray-800 outline -outline-offset-1 outline-white/10"
-                      />
+                      /> */}
                       <div className="min-w-0 flex-auto">
                         <p className={`${StyleLocal.clientText} text-sm/6 font-semibold text-gray-800`}>{cliente.nome}</p>
                         <p className={`${StyleLocal.clientText} mt-1 truncate text-xs/5 text-gray-600`}>{cliente.email}</p>
