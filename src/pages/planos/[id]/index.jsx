@@ -8,6 +8,7 @@ import {useState, useEffect, useRef} from 'react'
 import axios from 'axios' //UTILIZAR QUANDO O PROJETO FOR USAR TOKEN, AUTENTUCAÇÃO JWT, REUTILIZAR baseURL, Headers.
 import ModalSucesso from '../../../components/modal/modalsucesso/index'
 import ModalError from '../../../components/modal/modalerror/index'
+import { useParams } from 'next/navigation'
 
 export default function Planos(){
 
@@ -17,6 +18,9 @@ export default function Planos(){
     beneficios_plano: '',
     qtd_alunos_plano: '10'
 });
+
+  const { id } = useParams();
+
   const [imagem, setImagem] = useState(null);
   const [preview, setPreview] = useState(null);
   
@@ -73,6 +77,40 @@ const abrirSeletorImagem = () => {
 }
 
 
+//USADO PARA BUSCAR O PLANO SETADO
+useEffect(() => {
+  if (!id) return;
+
+  const fetchPlano = async () => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/plano/${id}`);
+
+      console.log(response.data);
+
+      const plano = response.data?.data || response.data;
+
+      if (!plano) return;
+
+      setFormData({
+        nome_plano: plano.nome_plano || '',
+        valor_plano: plano.valor_plano || '',
+        beneficios_plano: plano.beneficios_plano || '',
+        qtd_alunos_plano: plano.qtd_alunos_plano || '10'
+      });
+
+      if (plano.imagem_plano) {
+        setPreview(`http://127.0.0.1:8000/storage/${plano.imagem_plano}`);
+      }
+
+    } catch (error) {
+      console.error('Erro ao buscar plano:', error);
+    }
+  };
+
+  fetchPlano();
+}, [id]);
+
+
 const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -89,10 +127,10 @@ const handleSubmit = async (e) => {
       data.append('imagem_plano', imagem);
     }
     console.log(imagem)
+
     const response = await axios.post(
-      'http://127.0.0.1:8000/api/plano',
-      data,
-     
+      `http://127.0.0.1:8000/api/plano/${id}?_method=PUT`,
+      data
     );
 
     if (response.status === 200 || response.status === 201) {
