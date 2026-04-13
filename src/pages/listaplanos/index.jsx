@@ -23,7 +23,7 @@ import ModalAviso  from '../../components/modal/modalaviso/index'
       const [nomeCliente, setNomeCliente] = useState('')
         //Barra de aviso Toast
       const [toast, setToast] = useState(false)
-  //Listar Funcionario
+  //Listar Planos
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/api/plano')
       .then(response => {

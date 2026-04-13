@@ -107,6 +107,8 @@ export default function ListaClientes(){
                     >
                       <TrashIcon className="h-5 w-5 text-red-600 hover:text-red-800" />
                     </button>
+
+                    
                   </div>
 
                     <div className="flex min-w-0 gap-x-4">
@@ -138,9 +140,15 @@ export default function ListaClientes(){
                           <p className="text-xs/5 text-gray-400">Online</p>
                         </div>
                       )}
+                      
                        <p className={`${StyleLocal.clientText} text-sm/6 text-gray-800`}>
                       Data de pagamento: {cliente.data_pagamento}
                       </p>
+
+                      <p className={`${StyleLocal.clientText} text-sm/6 text-gray-800`}> 
+                        Plano: 
+                      </p>
+
                     </div>
                   </li>
                 ))}
