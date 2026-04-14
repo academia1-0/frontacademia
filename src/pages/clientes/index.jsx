@@ -319,7 +319,7 @@ const handleChange = (e) => {
             </select>
         
           </div>
-        </div>
+          </div>
 
           {/* <label className="flex items-center cursor-pointer gap-3">
               <span className="text-sm">Pagamento</span>

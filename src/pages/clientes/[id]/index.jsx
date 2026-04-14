@@ -20,7 +20,8 @@ export default function Clientes(){
     endereco: '',
     sexo: 'Outros',
     pagamento: 1,
-    data_pagamento: '31/03/2026'
+    data_pagamento: '31/03/2026',
+    plano: ''
 });
 
   const [ativo, setAtivo] = useState(false)
@@ -30,6 +31,11 @@ export default function Clientes(){
   const [errors, setErrors] = useState({});
   const [modalSucess, setModalSucess] = useState(false);
   const [modalError] = useState(true);
+
+  const [planos, setPlanos] = useState([])
+
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   //paramentros para editar clientes
   const params = useParams()
@@ -56,6 +62,22 @@ const handleChange = (e) => {
   }
 };
 
+
+//Usando para buscar planos
+
+useEffect(() => {
+  axios.get('http://127.0.0.1:8000/api/plano')
+    .then(response => {
+      setPlanos(response.data)
+      setLoading(false)
+    })
+    .catch(error => {
+      console.error(error)
+      setError('Erro ao carregar Planos')
+      setLoading(false)
+    })
+}, [])
+
 //Usando para buscar cliente
 useEffect(() => {
     if (id) {
@@ -74,7 +96,9 @@ useEffect(() => {
             endereco: cliente.endereco || '',
             sexo: cliente.sexo || 'Outros',
             pagamento: cliente.pagamento || 1,
-            data_pagamento: cliente.data_pagamento || ''
+            data_pagamento: cliente.data_pagamento || '',
+           plano: cliente.plano || ''
+            
           })
           setNomeCliente(cliente.nome)
         })
@@ -293,6 +317,32 @@ const handleSubmit = async (e) => {
                 {errors.data_nascimento[0]}
               </p>
             )}
+          </div>
+
+          <div className="flex flex-col gap-1 ">
+          <label className="block text-sm/6 font-semibold text-white">
+            Plano
+          </label>
+          <div className="mt-1.5">
+         
+          <select
+          className={`${StyleLocal.selecaoSexo} block w-full rounded-md bg-white/5 px-3.5 py-2.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500`}
+         
+          name="plano"
+          value={formData.plano}
+          //value={formData.nome_plano}
+          onChange={handleChange}
+          >
+            
+          {planos.map((plano) => (
+            <option value={plano.nome_plano}  key={plano.id} className={StyleLocal.selecaoOpSexo} >{plano.nome_plano}</option>
+                  
+          ))}
+
+
+            </select>
+        
+          </div>
           </div>
 
          

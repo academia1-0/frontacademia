@@ -146,7 +146,7 @@ export default function ListaClientes(){
                       </p>
 
                       <p className={`${StyleLocal.clientText} text-sm/6 text-gray-800`}> 
-                        Plano: 
+                        Plano: {cliente.plano}
                       </p>
 
                     </div>
